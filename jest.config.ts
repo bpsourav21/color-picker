@@ -9,7 +9,8 @@ const config: Config = {
   },
   testEnvironment: "jsdom",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  setupFiles: ["<rootDir>/jest.setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setupAfter.ts"],
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
@@ -17,6 +18,9 @@ const config: Config = {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
   },
   testPathIgnorePatterns: ["/node_modules/", "/dist/", "/example/"],
+  resetMocks: true,
+  collectCoverage: true,
+  verbose: true,
 };
 
 export default config;

@@ -1,7 +1,7 @@
-import React from 'react';
-import ColorPicker from './ColorPicker';
-import { Color } from './Color';
-import { ColorPickerInputProps } from './types';
+import React from "react";
+import ColorPicker from "./ColorPicker";
+import { Color } from "./Color";
+import { ColorPickerInputProps } from "./types";
 
 /**
  * A React functional component that renders a color picker input field.
@@ -19,9 +19,20 @@ import { ColorPickerInputProps } from './types';
  */
 
 const ColorPickerInput: React.FC<ColorPickerInputProps> = (props) => {
-  const { value, onChange, className, style, dataTestSection = 'color-picker-section' } = props;
+  const {
+    value,
+    onChange,
+    className,
+    style,
+    dropdownPosition,
+    dataTestSection = "color-picker-section",
+  } = props;
   return (
-    <div style={{ position: 'relative' }} data-test-section={dataTestSection} data-value={value}>
+    <div
+      style={{ position: "relative" }}
+      data-test-section={dataTestSection}
+      data-value={value}
+    >
       <input
         type="text"
         value={value}
@@ -30,13 +41,13 @@ const ColorPickerInput: React.FC<ColorPickerInputProps> = (props) => {
           onChange(color);
         }}
         style={{
-          padding: '7px 7px 7px 50px',
-          border: '1px solid #d6d6d6',
+          padding: "7px 7px 7px 50px",
+          border: "1px solid #d6d6d6",
           borderRadius: 5,
-          backgroundColor: '#fff',
-          width: '100%',
-          boxSizing: 'border-box',
-          WebkitBoxSizing: 'border-box',
+          backgroundColor: "#fff",
+          width: "100%",
+          boxSizing: "border-box",
+          WebkitBoxSizing: "border-box",
           ...style,
         }}
         className={className}
@@ -49,7 +60,14 @@ const ColorPickerInput: React.FC<ColorPickerInputProps> = (props) => {
           const color = rgba.toString();
           onChange(color);
         }}
-        style={{ position: 'absolute', left: 5, top: 5, bottom: 0, margin: 'auto' }}
+        style={{
+          position: "absolute",
+          left: 5,
+          top: 5,
+          bottom: 0,
+          margin: "auto",
+        }}
+        dropdownPosition={dropdownPosition}
       />
     </div>
   );

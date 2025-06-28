@@ -1,4 +1,4 @@
-import { Color } from './Color';
+import { Color } from "./Color";
 
 export type RGB = {
   r: number;
@@ -85,11 +85,13 @@ export interface ColorDetailsProps {
  * @property {(rgba: Color) => void} onColorChange - Callback function triggered when the color changes.
  * Receives the new color as an argument in RGBA format.
  */
-export interface ColorPickerProps extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {
+export interface ColorPickerProps
+  extends Omit<React.HTMLAttributes<HTMLInputElement>, "onChange"> {
   showCopyButton?: boolean;
   dataTestSection?: string;
   value?: string;
   onColorChange: (rgba: Color) => void;
+  dropdownPosition?: "left" | "right" | "top" | "bottom";
 }
 
 /**
@@ -102,8 +104,12 @@ export interface ColorPickerProps extends Omit<React.HTMLAttributes<HTMLInputEle
  * @property {string} [dataTestSection] - Optional attribute for testing purposes, used to identify the component in tests.
  */
 export interface ColorPickerInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "onChange" | "value"
+  > {
   value: string;
   onChange: (color: string) => void;
   dataTestSection?: string;
+  dropdownPosition?: "left" | "right" | "top" | "bottom";
 }

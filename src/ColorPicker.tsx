@@ -1,11 +1,17 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import AlphaSlider from './AlphaSlider';
-import ColorDetails from './ColorDetails';
-import ColorPickerCanvas from './ColorPickerCanvas';
-import SpectrumSlider from './SpectrumSlider';
-import { ColorPickerProps, RGB } from './types';
-import { Color } from './Color';
-import { debounce } from './helpers';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import AlphaSlider from "./AlphaSlider";
+import ColorDetails from "./ColorDetails";
+import ColorPickerCanvas from "./ColorPickerCanvas";
+import SpectrumSlider from "./SpectrumSlider";
+import { ColorPickerProps, RGB } from "./types";
+import { Color } from "./Color";
+import { debounce } from "./helpers";
 
 /**
  * A React functional component for a customizable color picker.
@@ -40,9 +46,10 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     value,
     onColorChange,
     style,
-    dataTestSection = 'color-picker',
+    dataTestSection = "color-picker",
     className,
     showCopyButton,
+    dropdownPosition,
   } = props;
 
   const colorValue = new Color(value);
@@ -59,7 +66,10 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     (event: MouseEvent) => {
       event.stopPropagation();
       const target = event.composedPath?.()[0] as Node; // detecting shadow DOM
-      if (dropdownRef.current && !dropdownRef.current.contains(target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(target as Node)
+      ) {
         setShowPalette(false);
       }
     },
@@ -68,12 +78,12 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
   useEffect(() => {
     if (showPalette) {
-      window.addEventListener('mousedown', handleClickOutside);
+      window.addEventListener("mousedown", handleClickOutside);
     } else {
-      window.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener("mousedown", handleClickOutside);
     }
     return () => {
-      window.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showPalette, handleClickOutside]);
 
@@ -81,7 +91,10 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     return Color.fromHsv(hsv, alpha);
   }, [hsv, alpha]);
 
-  const debouncedOnColorChange = useMemo(() => debounce(onColorChange, 300), [onColorChange]);
+  const debouncedOnColorChange = useMemo(
+    () => debounce(onColorChange, 300),
+    [onColorChange]
+  );
 
   useEffect(() => {
     if (isChanged) {
@@ -125,29 +138,56 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     height: 40,
     width: 40,
     backgroundColor: rgba.toString(),
-    border: '1px solid #d6d6d6',
+    border: "1px solid #d6d6d6",
     borderRadius: 50,
     marginRight: 5,
   };
 
   const renderColorPicker = () => {
+    let positionStyle: React.CSSProperties;
+
+    switch (dropdownPosition) {
+      case "left":
+        positionStyle = {
+          left: 35,
+          bottom: "auto",
+          right: "auto",
+          top: "auto",
+        };
+        break;
+      case "right":
+        positionStyle = {
+          right: 35,
+          bottom: "auto",
+          left: "auto",
+          top: "auto",
+        };
+        break;
+      case "bottom":
+        positionStyle = { left: 0, top: 35, right: "auto", bottom: "auto" };
+        break;
+      case "top":
+      default:
+        positionStyle = { left: 0, bottom: 35, right: "auto", top: "auto" };
+        break;
+    }
+
     return (
       <div
         data-test-section="color-picker-dropdown"
         ref={dropdownRef}
         style={{
           width: 200,
-          margin: '0 auto',
+          margin: "0 auto",
           padding: 10,
-          position: 'absolute',
+          position: "absolute",
           zIndex: 100000,
-          left: 0,
-          bottom: 35,
-          border: '1px solid #d6d6d6',
+          border: "1px solid #d6d6d6",
           borderRadius: 5,
-          backgroundColor: '#fff',
-          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-          display: showPalette ? 'block' : 'none',
+          backgroundColor: "#fff",
+          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+          display: showPalette ? "block" : "none",
+          ...positionStyle,
         }}
       >
         <div>
@@ -159,17 +199,25 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
           />
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               marginTop: 5,
             }}
           >
             <div style={previewStyle} />
             <div>
-              <SpectrumSlider hsv={hsv} width={width - 50} onColorSelect={handleSpectrumSelect} />
+              <SpectrumSlider
+                hsv={hsv}
+                width={width - 50}
+                onColorSelect={handleSpectrumSelect}
+              />
               <div style={{ marginBottom: 5 }} />
-              <AlphaSlider width={width - 50} alpha={alpha} onChange={handleAlphaChange} />
+              <AlphaSlider
+                width={width - 50}
+                alpha={alpha}
+                onChange={handleAlphaChange}
+              />
             </div>
           </div>
           <ColorDetails
@@ -190,11 +238,19 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
       data-value={rgba.toString()}
     >
       <div
-        style={{ ...previewStyle, width: 40, height: 25, borderRadius: 5, cursor: 'pointer' }}
+        style={{
+          ...previewStyle,
+          width: 40,
+          height: 20,
+          borderRadius: 5,
+          cursor: "pointer",
+          position: "relative",
+        }}
         onClick={() => setShowPalette(!showPalette)}
         data-test-section={`${dataTestSection}-preview`}
-      />
-      {renderColorPicker()}
+      >
+        {renderColorPicker()}
+      </div>
     </div>
   );
 };
