@@ -1,7 +1,6 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import ColorPickerInput from './ColorPickerInput';
 import '@testing-library/jest-dom';
+import { fireEvent, render } from '@testing-library/react';
+import ColorPickerInput from './ColorPickerInput';
 
 describe('ColorPickerInput', () => {
   it('renders the input with the correct value', () => {

@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import React from 'react';
 import ColorPickerCanvas from './ColorPickerCanvas';
 
 describe('ColorPickerCanvas', () => {

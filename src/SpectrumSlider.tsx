@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Color } from './Color';
-import { SpectrumSliderProps } from './types';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Color } from "./Color";
+import { SpectrumSliderProps } from "./types";
 
 // Canvas dimensions
 const height = 16;
 
-export const SpectrumSlider: React.FC<SpectrumSliderProps> = ({ width, onColorSelect, hsv }) => {
+export const SpectrumSlider: React.FC<SpectrumSliderProps> = ({
+  width,
+  onColorSelect,
+  hsv,
+}) => {
   const gradientCanvasRef = useRef<HTMLCanvasElement>(null);
   const pointerCanvasRef = useRef<HTMLCanvasElement>(null);
   const lastPointerXRef = useRef<number | null>(null);
@@ -15,17 +19,17 @@ export const SpectrumSlider: React.FC<SpectrumSliderProps> = ({ width, onColorSe
   // Draw the hue gradient once
   useEffect(() => {
     const canvas = gradientCanvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
     const gradient = ctx.createLinearGradient(0, 0, width, 0);
-    gradient.addColorStop(0.0, '#ff0000'); // Red (0°)
-    gradient.addColorStop(1 / 6, '#ffff00'); // Yellow (60°)
-    gradient.addColorStop(2 / 6, '#00ff00'); // Green (120°)
-    gradient.addColorStop(3 / 6, '#00ffff'); // Cyan (180°)
-    gradient.addColorStop(4 / 6, '#0000ff'); // Blue (240°)
-    gradient.addColorStop(5 / 6, '#ff00ff'); // Magenta (300°)
-    gradient.addColorStop(1.0, '#ff0000'); // Red again (360°)
+    gradient.addColorStop(0.0, "#ff0000"); // Red (0°)
+    gradient.addColorStop(1 / 6, "#ffff00"); // Yellow (60°)
+    gradient.addColorStop(2 / 6, "#00ff00"); // Green (120°)
+    gradient.addColorStop(3 / 6, "#00ffff"); // Cyan (180°)
+    gradient.addColorStop(4 / 6, "#0000ff"); // Blue (240°)
+    gradient.addColorStop(5 / 6, "#ff00ff"); // Magenta (300°)
+    gradient.addColorStop(1.0, "#ff0000"); // Red again (360°)
 
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
@@ -35,16 +39,16 @@ export const SpectrumSlider: React.FC<SpectrumSliderProps> = ({ width, onColorSe
   const drawPointer = useCallback(
     (x: number) => {
       const canvas = pointerCanvasRef.current;
-      const ctx = canvas?.getContext('2d');
+      const ctx = canvas?.getContext("2d");
       if (!canvas || !ctx) return;
 
       ctx.clearRect(0, 0, width, height);
 
       ctx.beginPath();
       ctx.arc(x, height / 2, 6, 0, 2 * Math.PI);
-      ctx.strokeStyle = 'white';
+      ctx.strokeStyle = "white";
       ctx.lineWidth = 2;
-      ctx.shadowColor = 'black';
+      ctx.shadowColor = "black";
       ctx.shadowBlur = 2;
       ctx.stroke();
       ctx.shadowBlur = 0;
@@ -63,7 +67,7 @@ export const SpectrumSlider: React.FC<SpectrumSliderProps> = ({ width, onColorSe
 
   const handleSelect = useCallback(
     (clientX: number) => {
-      const ctx = gradientCanvasRef.current?.getContext('2d');
+      const ctx = gradientCanvasRef.current?.getContext("2d");
       const rect = gradientCanvasRef.current?.getBoundingClientRect();
       if (!rect || !ctx) return;
 
@@ -78,7 +82,7 @@ export const SpectrumSlider: React.FC<SpectrumSliderProps> = ({ width, onColorSe
   return (
     <div
       style={{
-        position: 'relative',
+        position: "relative",
         width,
         height,
       }}
@@ -89,7 +93,7 @@ export const SpectrumSlider: React.FC<SpectrumSliderProps> = ({ width, onColorSe
         width={width}
         height={height}
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           zIndex: 0,
@@ -101,23 +105,23 @@ export const SpectrumSlider: React.FC<SpectrumSliderProps> = ({ width, onColorSe
         width={width}
         height={height}
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           zIndex: 1,
-          pointerEvents: 'none',
+          pointerEvents: "none",
         }}
       />
       <div
         data-test-section="mouse-event-slider"
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           width,
           height,
           zIndex: 2,
-          cursor: 'pointer',
+          cursor: "pointer",
         }}
         onMouseDown={(e) => {
           setIsDragging(true);
