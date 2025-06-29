@@ -1,8 +1,9 @@
 {
   "name": "color-picker",
-  "private": true,
-  "version": "0.0.0",
+  "description": "A customizable color picker component for React applications, supporting HEX, RGBA, and HSL formats.",
+  "version": "1.0.0",
   "type": "module",
+  "main": "dist/color-picker.umd.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,7 +11,15 @@
     "preview": "vite preview",
     "test": "jest --no-cache",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage --watchAll=false"
+    "test:coverage": "jest --coverage --watchAll=false",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
     "react": "^17 || ^18 || ^19",
@@ -37,7 +46,16 @@
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "color picker",
+    "color picker input",
+    "hex",
+    "rgba",
+    "hsl",
+    "customizable",
+    "palette"
+  ],
   "author": "Mahadi Hasan Sourav",
   "license": "MIT"
 }
