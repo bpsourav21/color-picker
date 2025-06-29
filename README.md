@@ -101,7 +101,7 @@ console.log(color.toHex()); // "#ff0000"
 console.log(color.toHsl()); // "hsl(0, 100%, 50%)"
 ```
 
-````js
+```js
 // Using static from methods
 const color1 = Color.fromHex("#00ff00");
 console.log(color1.toRgb()); // "rgb(0, 255, 0)"
