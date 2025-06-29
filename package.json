@@ -4,10 +4,12 @@
   "version": "1.0.0",
   "type": "module",
   "main": "dist/color-picker.js",
+  "repository": "https://github.com/bpsourav21/color-picker.git",
   "scripts": {
-    "clean": "rm -rf dist && rm -rf node_modules/.cache && rm -rf node_modules/.tmp",
+    "clean": "rm -rf dist && rm -rf example-dist && rm -rf node_modules/.cache && rm -rf node_modules/.tmp",
     "dev": "vite",
     "build": "npm run clean && tsc -b && vite build",
+    "build-example": "npm run clean && BUILD_EXAMPLE=true vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest --no-cache",
@@ -20,7 +22,7 @@
     "README.md"
   ],
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
     "react": "^17 || ^18 || ^19",

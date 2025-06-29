@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+example-dist
 *.local
 coverage
 
@@ -23,3 +24,4 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+.npmrc

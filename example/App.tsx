@@ -215,10 +215,10 @@ export default function App() {
           </a>
         </p>
         <p>
-          <a href="https://www.npmjs.com/package/color-picker" target="__blank">
+          {/* <a href="https://www.npmjs.com/package/color-picker" target="__blank">
             NPM Package
           </a>
-          {" | "}
+          {" | "} */}
           <a href="https://github.com/bpsourav21/color-picker" target="__blank">
             Github Repository
           </a>
