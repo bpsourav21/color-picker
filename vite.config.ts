@@ -6,6 +6,7 @@ process.env.BUILD_EXAMPLE = process.env.BUILD_EXAMPLE || (process.env.npm_lifecy
 
 export default defineConfig(({ command }) => ({
   plugins: [react()],
+  base: '/color-picker/',
   build: {
     lib: {
       entry: "src/index.tsx",
