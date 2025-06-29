@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy Exaple page content to Github Pages
+name: Deploy Example page content to Github Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -42,6 +42,11 @@ jobs:
 
       - name: Build and Deploy Example
         run: npm run deploy-example
+
+      - name: Configure Git Identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
