@@ -10,7 +10,7 @@ const AlphaSlider: React.FC<AlphaSliderProps> = ({ width, alpha, onChange }) => 
 
   const checkerboardPattern = useMemo(() => {
     const checkerSize = 8;
-    if (!document) return null;
+    if (typeof document === "undefined") return null;
     // Create an offscreen canvas for the checkerboard pattern
     const offscreen = document.createElement('canvas');
     offscreen.width = checkerSize * 2;

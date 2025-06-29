@@ -3,10 +3,11 @@
   "description": "A customizable color picker component for React applications, supporting HEX, RGBA, and HSL formats.",
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/color-picker.umd.js",
+  "main": "dist/color-picker.js",
   "scripts": {
+    "clean": "rm -rf dist && rm -rf node_modules/.cache && rm -rf node_modules/.tmp",
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run clean && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest --no-cache",

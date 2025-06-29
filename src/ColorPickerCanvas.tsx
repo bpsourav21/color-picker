@@ -1,9 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Color } from './Color';
-import { throttle } from './helpers';
-import { ColorPickerCanvasProps } from './types';
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { Color } from "./Color";
+import { throttle } from "./helpers";
+import { ColorPickerCanvasProps } from "./types";
 
-const ColorPickerCanvas: React.FC<ColorPickerCanvasProps> = ({ width, height, hsv, onSelect }) => {
+const ColorPickerCanvas: React.FC<ColorPickerCanvasProps> = ({
+  width,
+  height,
+  hsv,
+  onSelect,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerCanvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -14,10 +19,11 @@ const ColorPickerCanvas: React.FC<ColorPickerCanvasProps> = ({ width, height, hs
   });
 
   const spectrumCanvas = useMemo(() => {
-    const offCanvas = document.createElement('canvas');
+    if (typeof document === "undefined") return null;
+    const offCanvas = document.createElement("canvas");
     offCanvas.width = width;
     offCanvas.height = height;
-    const offCtx = offCanvas.getContext('2d');
+    const offCtx = offCanvas.getContext("2d");
     if (!offCtx) return null;
 
     const imageData = offCtx.createImageData(width, height);
@@ -52,26 +58,32 @@ const ColorPickerCanvas: React.FC<ColorPickerCanvasProps> = ({ width, height, hs
     const canvas = pointerCanvasRef.current;
     const pointer = pointerRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
     ctx.arc(pointer.x, pointer.y, 6, 0, 2 * Math.PI);
-    ctx.strokeStyle = '#fff';
+    ctx.strokeStyle = "#fff";
     ctx.lineWidth = 2;
-    ctx.shadowColor = 'black';
+    ctx.shadowColor = "black";
     ctx.shadowBlur = 2;
     ctx.stroke();
     ctx.shadowBlur = 0;
   }, [width, height]);
 
-  const throttledDrawCanvas = useMemo(() => throttle(drawCanvas, 20), [drawCanvas]);
-  const throttledDrawPointer = useMemo(() => throttle(drawPointer, 20), [drawPointer]);
+  const throttledDrawCanvas = useMemo(
+    () => throttle(drawCanvas, 20),
+    [drawCanvas]
+  );
+  const throttledDrawPointer = useMemo(
+    () => throttle(drawPointer, 20),
+    [drawPointer]
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    ctxRef.current = canvas.getContext('2d');
+    ctxRef.current = canvas.getContext("2d");
     throttledDrawCanvas();
   }, [throttledDrawCanvas]);
 
@@ -100,26 +112,45 @@ const ColorPickerCanvas: React.FC<ColorPickerCanvasProps> = ({ width, height, hs
   );
 
   return (
-    <div style={{ position: 'relative', width, height, border: '1px solid #d6d6d6' }}>
+    <div
+      style={{
+        position: "relative",
+        width,
+        height,
+        border: "1px solid #d6d6d6",
+      }}
+    >
       <canvas
         data-test-section="spectrum-canvas"
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }}
+        style={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
       />
       <canvas
         data-test-section="pointer-canvas"
         ref={pointerCanvasRef}
         width={width}
         height={height}
-        style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, pointerEvents: 'none' }}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: 2,
+          pointerEvents: "none",
+        }}
       />
       <canvas
         data-test-section="data-picker-canvas"
         width={width}
         height={height}
-        style={{ position: 'absolute', top: 0, left: 0, zIndex: 3, cursor: 'crosshair' }}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: 3,
+          cursor: "crosshair",
+        }}
         onClick={handlePick}
         onMouseMove={(e) => e.buttons === 1 && handlePick(e)}
       />

@@ -177,7 +177,6 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
         data-test-section="color-picker-dropdown"
         ref={dropdownRef}
         style={{
-          width: 200,
           margin: "0 auto",
           padding: 10,
           position: "absolute",
@@ -237,18 +236,18 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
       data-test-section={dataTestSection}
       data-value={rgba.toString()}
     >
-      <div
-        style={{
-          ...previewStyle,
-          width: 40,
-          height: 20,
-          borderRadius: 5,
-          cursor: "pointer",
-          position: "relative",
-        }}
-        onClick={() => setShowPalette(!showPalette)}
-        data-test-section={`${dataTestSection}-preview`}
-      >
+      <div style={{ position: "relative" }}>
+        <div
+          style={{
+            ...previewStyle,
+            width: 40,
+            height: 20,
+            borderRadius: 5,
+            cursor: "pointer",
+          }}
+          onClick={() => setShowPalette(!showPalette)}
+          data-test-section={`${dataTestSection}-preview`}
+        />
         {renderColorPicker()}
       </div>
     </div>

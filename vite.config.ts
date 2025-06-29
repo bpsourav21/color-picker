@@ -7,7 +7,8 @@ export default defineConfig(({ command }) => ({
     lib: {
       entry: "src/index.tsx",
       name: "colorPicker",
-      fileName: (format) => `color-picker.${format}.js`,
+      // fileName: (format) => `color-picker.${format}.js`,
+      // formats: ["es", "umd", "cjs"],
     },
     rollupOptions: {
       external: ["react", "react-dom"],
