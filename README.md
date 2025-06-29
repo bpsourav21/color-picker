@@ -130,4 +130,4 @@ console.log(color3.toString()); // "rgba(0, 255, 0, 1)"
 ## License
 
 MIT
-````
+
